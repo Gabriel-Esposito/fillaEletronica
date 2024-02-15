@@ -1,0 +1,19 @@
+<input type="text" name="cpf" id="cpf" oninput="mostrar()">
+<h1 onclick="tr()">Mostrar</h1>
+<h3 id="res"></h3>
+<script>
+    let novo = ''
+    let t = '12345'
+    function mostrar(){
+       let v = (document.getElementById('cpf')).value
+       let res = document.getElementById('res')
+       if(v.length == 11){
+        novo = `${v[0]}${v[1]}${v[2]}.${v[3]}${v[4]}${v[5]}.${v[6]}${v[7]}${v[8]}-${v[9]}${v[10]}`
+        res.innerHTML = novo
+        console.log('cpf: '+novo)
+       }
+    }
+    function tr(){
+        console.log(t[0])
+    }
+</script>

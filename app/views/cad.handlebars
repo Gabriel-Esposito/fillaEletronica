@@ -1,0 +1,81 @@
+<link rel="stylesheet" href="css/cad.css">
+
+<main>
+    <section>
+        <div class="formulario">
+            <div class="nome">
+                <h3>Nome do paciente<span class="obrigatorio">*</span></h3>
+                <input type="text" name="name" id="name" oninput="nomeDoPaciente()">
+            </div>
+    
+            <div class="CPF">
+                <h3>CPF<span class="obrigatorio">*</span></h3>
+                <input type="number" name="cpf" id="cpf" min="11111111111" max="99999999999" oninput="cpfDoPaciente()">
+            </div>
+    
+            <div class="cons">
+                <h3>Consulta<span class="obrigatorio">*</span></h3>
+                <select name="tipoConsulta" id="tipoConsulta" oninput="consultaDoPaciente()">
+                    <option value="vazio">---Escolha---</option>
+                    <option value="Dentista">Dentista</option>
+                    <option value="Vascina">Vascina</option>
+                    <option value="Pediatria">Pediatria</option>
+                    <option value="Nutricionista">Nutricionista</option>
+                    <option value="Exames">Exames</option>
+                </select>
+            </div>
+    
+            <div class="pri">
+                <h3>O paciente precisa de Prioridade?<span class="obrigatorio">*</span></h3>
+                <div class="btns">
+                    <div class="btn" id="sim" onclick="comPrioridade()">SIM</div>
+                    <div class="btn" id="nao" onclick="semPrioridade()">NÃO</div>
+                </div>
+                <div id="prioridade">
+                    <h3>Digite a prioridade Necessaria abaixo<span class="obrigatorio">*</span></h3>
+                    <input type="text" name="prioridade" id="tipoDePrioridade" oninput="prioridadeDoPaciente()">
+                </div>
+            </div>
+        </div>
+    
+        <div class="informacoes">
+            <h3>Nome:</h3>
+            <p id="pacienteNome"></p>
+    
+            <h3>CPF:</h3>
+            <p id="pacienteCPF"></p>
+    
+            <h3>Tipo de consulta:</h3>
+            <p id="pacienteConsulta"></p>
+    
+            <h3>Possui prioridade?</h3>
+            <p id="pacientePrioridade"></p>
+    
+            <div id="cadastrar" onclick="enviar()">Cadastrar</div>
+        </div>
+    </section>
+</main>
+
+<script src="scripts/cad.js"></script>
+
+    {{!-- nome: {
+        type: mysql.Sequelize.STRING
+    },
+    cpf: {
+        type: mysql.Sequelize.STRING
+    },
+    consulta: {
+        type: mysql.Sequelize.STRING
+    },
+    prioridade: {
+        type: mysql.Sequelize.STRING
+    },
+    atendido: {
+        type: mysql.Sequelize.STRING
+    },
+    senha: {
+        type: mysql.Sequelize.STRING
+    },
+    codigo: {
+        type: mysql.Sequelize.STRING
+    } --}}
