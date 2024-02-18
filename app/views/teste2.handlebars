@@ -1,19 +1,44 @@
-<input type="text" name="cpf" id="cpf" oninput="mostrar()">
-<h1 onclick="tr()">Mostrar</h1>
-<h3 id="res"></h3>
+<audio src="audios/num0.mp3" type="audio/mpeg" id="a0"></audio>
+<audio src="audios/num1.mp3" type="audio/mpeg" id="a1"></audio>
+<audio src="audios/num2.mp3" type="audio/mpeg" id="a2"></audio>
+<audio src="audios/num3.mp3" type="audio/mpeg" id="a3"></audio>
+<audio src="audios/num4.mp3" type="audio/mpeg" id="a4"></audio>
+<audio src="audios/num5.mp3" type="audio/mpeg" id="a5"></audio>
+<audio src="audios/num6.mp3" type="audio/mpeg" id="a6"></audio>
+<audio src="audios/num7.mp3" type="audio/mpeg" id="a7"></audio>
+<audio src="audios/num8.mp3" type="audio/mpeg" id="a8"></audio>
+<audio src="audios/num9.mp3" type="audio/mpeg" id="a9"></audio>
+<audio src="audios/chamada.mp3" type="audio/mpeg" id="chamada"></audio>
+<input type="text" name="num" id="num">
+<h1 onclick="ouvir()">Tocar</h1>
+<h2 onclick="mostrar()" id="titulo">034</h2>
+
 <script>
-    let novo = ''
-    let t = '12345'
-    function mostrar(){
-       let v = (document.getElementById('cpf')).value
-       let res = document.getElementById('res')
-       if(v.length == 11){
-        novo = `${v[0]}${v[1]}${v[2]}.${v[3]}${v[4]}${v[5]}.${v[6]}${v[7]}${v[8]}-${v[9]}${v[10]}`
-        res.innerHTML = novo
-        console.log('cpf: '+novo)
-       }
+    function ouvir(){
+        let audios = [a0 = document.getElementById('a0'),a1 = document.getElementById('a1'),a2 = document.getElementById('a2'),a3 = document.getElementById('a3'),a4 = document.getElementById('a4'),a5 = document.getElementById('a5'),a6 = document.getElementById('a6'),a7 = document.getElementById('a7'),a8 = document.getElementById('a8'),a9 = document.getElementById('a9')]
+        let chamada = document.getElementById('chamada')
+        let num = document.getElementById('titulo').outerText
+
+       // let num = document.getElementById('num').value
+        console.log(num)
+        chamada.play()
+        setTimeout(() => {
+            audios[num[0]].play()
+            console.log(num[0])
+        },3000)
+        setTimeout(() => {
+            audios[num[1]].play()
+            console.log(num[1])
+        },4000)
+        setTimeout(() => {
+            audios[num[2]].play()
+            console.log(num[2])
+        },5000)
+        //audios[0].play()
     }
-    function tr(){
-        console.log(t[0])
+
+    function mostrar(){
+        let titulo = document.getElementById('titulo')
+        console.log(titulo.outerText)
     }
 </script>

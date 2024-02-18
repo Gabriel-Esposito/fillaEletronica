@@ -10,61 +10,83 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
 
-let pacientes_cad = ''
+let pacientes_cad = []
 let pacientes_num = 0
+let dadosDecad = []
 
 app.get('/',function(req,res){
-    //dados() //pag inicial
+    res.render('teste2')
+})
+
+app.get('/c',function(req,res){
+    dados() //pag inicial
     res.render('cad')
 })
 app.get('/cad',function(req,res){
-    cad() //cad user
-    res.send('teste')
+    //cad() //cad user
+    res.send('<h1>Tudo certo!</h1>')
 })
 app.get('/dados',function(req,res){
-    res.render('teste',{posts: pacientes_cad})
+    res.render('teste')
+})
+
+app.post('/cad',function(req,res){
+    dadosDecad = req.body.dados
+    cad()
+    res.send(req.body.dados)
 })
 
 function dados(){
     BancoDedados.findAll({order:[['id','DESC']]}).then(function(posts){
-        pacientes_cad = posts
-        pacientes_num = pacientes_cad.length
-        console.log(`dado server: ${pacientes_num} || dados mysql: ${posts.length}`)
+       // pacientes_cad = posts.dataValues
+        pacientes_num = posts.length
+        for(let i = 0; i < posts.length; i++){
+            if(posts[i].atendido == 'false'){
+                pacientes_cad.push(posts[i].dataValues)
+            }
+        }
+        //console.log(pacientes_num)
+        //console.log(pacientes_cad)
+
     })
 }
 function senha(){
     while(true){
         if(pacientes_num < 10){
-            return `00${pacientes_num++}`
+            return `00${pacientes_num + 1}`
         }else if(pacientes_num > 9 && pacientes_num < 100){
-            return `0${pacientes_num++}`
+            return `0${pacientes_num + 1}`
         }else if(pacientes_num > 99 && pacientes_num <= 999){
-            return pacientes_num++
+            return pacientes_num + 1
         }else if(pacientes_num > 1000){
             pacientes_num - 999
         }
     }
 }
 
-function cad(){
-    while(true){
-        console.log(pacientes_num)
-        if(pacientes_num != '000'){
-            BancoDedados.create({
-                nome: 'Jg',
-                cpf: '123.123.123-12',
-                consulta: 'Dentista',
-                prioridade: 'True',
-                atendido: 'true',
-                senha: senha(),
-                codigo: '12345678'
-            })
-            break
-        }
+function codigo(){
+    let valores = ['ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz','12345678901234567890123456']
+    let codigoPaciente = ''
+    for(let i = 0; i < 6; i++){
+        let op = Math.floor(Math.random() * 3)
+        let val = Math.floor(Math.random() * 26)
+        codigoPaciente += valores[op][val]
     }
-    
+    return codigoPaciente
 }
 
-app.listen(8080,function(){
+function cad(){
+    BancoDedados.create({
+        nome: `${dadosDecad[0]}`,
+        cpf: `${dadosDecad[1]}`,
+        consulta: `${dadosDecad[2]}`,
+        prioridade: `${dadosDecad[3]}`,
+        atendido: 'false',
+        senha: senha(),
+        codigo: codigo()
+    })
+}
+
+app.listen(8082,function(){
     console.log('Servidor ligado!')
 })

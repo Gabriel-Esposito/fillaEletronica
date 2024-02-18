@@ -94,6 +94,13 @@ function cadastrar(){
 function enviar(){
     if(cadastrar() == 1){
         console.log(dados)
-        //vai enviar os dados
+        fetch('/cad',{
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({dados})
+        })
+        window.location.href = 'http://localhost:8082/cad'
     }
 }
