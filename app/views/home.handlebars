@@ -1,0 +1,91 @@
+<link rel="stylesheet" href="css/home.css">
+
+<main>
+    <section id="control">
+        <div class="btn-cad">Cadastrar Paciente <span class="material-symbols-outlined">add</span></div>
+
+        <div class="prox">
+            <h3>Selecione o setor livre:</h3>
+            <div class="box-setor">
+                <p><strong>Setor:</strong></p>
+                <select name="setorLivre" id="setorLivre" oninput="btnChamar()">
+                    <option value="vazio">---Escolha---</option>
+                        <option value="Dentista">Dentista</option>
+                        <option value="Vascina">Vascina</option>
+                        <option value="Pediatria">Pediatria</option>
+                        <option value="Nutricionista">Nutricionista</option>
+                        <option value="Exames">Exames</option>
+                </select>
+            </div>
+            <div id="btn-prox">Chamar Paciente <span class="material-symbols-outlined">arrow_forward</span></div>
+        </div>
+
+        <div class="pdf">
+            <h3>Precisa imprimir novamente a senha?</h3>
+            <p>Digite o CPF do paciente no campo a baixo, <strong>caso o número já tenha sido chamado, o paciente terá de efetuar um novo cadastro!</strong></p>
+            <div class="box-cpf">
+                <p><strong>CPF:</strong></p>
+                <input type="text" name="cpfPDF" id="cpfPDF" oninput="btnCPF()">
+            </div>
+            <div id="cpf-pdf">Imprimir novamente <span class="material-symbols-outlined">rotate_left</span></div>
+        </div>
+
+        <div class="conferir">
+            <h3>Problemas com a senha?</h3>
+            <p>digite o código de segurança no campo a baixo para conferir os dados do paciente</p>
+            <div class="box-codigo">
+                <p><strong>Código:</strong></p>
+                <input type="text" name="codigoSePaciente" id="codigoSePaciente" oninput="btnCodigo()">
+            </div>
+            <div id="btn-conferir">Conferir dados <span class="material-symbols-outlined">quick_reference_all</span></div>
+        </div>
+    </section>
+    
+    <section id="listaPacientes">
+        <div class="cabecalho">
+            <div class="titulo">
+                <p>Número de pacientes: 01</p>
+            </div>
+            <div class="tituloTabela">
+                <p id="name">NOME</p>
+                <p id="cons">CONSULTA</p>
+                <p id="password">SENHA</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="paciente">
+                <p id="nomePac"><span class="material-symbols-outlined">person</span>Ana Clara</p>
+                <p id="consultaPac">Dentista</p>
+                <p id="senhaPac">001</p>
+             </div>
+            <div class="paciente">
+                <p id="nomePac"><span class="material-symbols-outlined">person</span>Marcos</p>
+                <p id="consultaPac">Pediatria</p>
+                <p id="senhaPac">195</p>
+             </div>
+                         <div class="paciente">
+                <p id="nomePac"><span class="material-symbols-outlined">person</span>Ana Clara</p>
+                <p id="consultaPac">Dentista</p>
+                <p id="senhaPac">001</p>
+             </div>
+            <div class="paciente">
+                <p id="nomePac"><span class="material-symbols-outlined">person</span>Marcos</p>
+                <p id="consultaPac">Pediatria</p>
+                <p id="senhaPac">195</p>
+             </div>
+                         <div class="paciente">
+                <p id="nomePac"><span class="material-symbols-outlined">person</span>Ana Clara</p>
+                <p id="consultaPac">Dentista</p>
+                <p id="senhaPac">001</p>
+             </div>
+            <div class="paciente">
+                <p id="nomePac"><span class="material-symbols-outlined">person</span>Marcos</p>
+                <p id="consultaPac">Pediatria</p>
+                <p id="senhaPac">195</p>
+             </div>
+        </div>
+    </section>
+</main>
+
+<script src="scripts/home.js"></script>

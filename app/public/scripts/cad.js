@@ -101,6 +101,6 @@ function enviar(){
             },
             body: JSON.stringify({dados})
         })
-        window.location.href = 'http://localhost:8082/cad'
+        window.location.href = 'http://localhost:8082/'
     }
 }

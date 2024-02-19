@@ -15,11 +15,21 @@ let pacientes_num = 0
 let dadosDecad = []
 
 app.get('/',function(req,res){
-    res.render('teste2')
+    res.render('home')
+})
+
+app.get('/pdf',function(req,res){
+    let d = {
+        senha: '182',
+        consulta: 'Exames',
+        codigo: 'haK67s',
+        data: '24/02/2024'
+    }
+    res.render('pdf',d)
 })
 
 app.get('/c',function(req,res){
-    dados() //pag inicial
+    //dados() //pag inicial
     res.render('cad')
 })
 app.get('/cad',function(req,res){

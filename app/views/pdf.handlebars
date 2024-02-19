@@ -1,0 +1,50 @@
+<style>
+    *{
+        margin: 0;
+    }
+    h3, p{
+        margin-bottom: 0.5rem;
+    }
+    .linha {
+        margin-top: 1rem;
+        border-top: 1px solid black;
+    }
+    .pdf{
+        width: 500px;
+    }
+    .pdf > h1{
+        text-align: center;
+        font-size: 4em;
+        padding: 4rem 4rem 2rem 0rem;
+    }
+    .box{
+        width: 40%;
+        margin-left: 4rem;
+    }
+    #data{
+        font-size: 0.8em;
+        text-align: end;
+    }
+</style>
+
+<div class="pdf">
+    <h1>{{senha}}</h1>
+    <div class="box">
+        <h3>Consulta:</h3>
+        <p>{{consulta}}</p>
+        <h3>Código de segurança:</h3>
+        <p>{{codigo}}</p>
+    </div>
+    <h3 id="data">{{data}}</h3>
+    <div class="linha"></div>
+</div>
+
+<script>
+    function pdf(){
+        print()
+        setTimeout(() =>{
+            window.location.href = 'http://localhost:8082/c'
+        },4000)
+    }
+    //pdf()
+</script>
