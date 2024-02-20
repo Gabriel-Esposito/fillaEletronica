@@ -6,7 +6,7 @@ main{
 
 #control{
     width: 50%;
-    background-color: chocolate;
+    padding: 1rem;
 }
 #control > .btn-cad{
     background-color: white;
@@ -54,7 +54,6 @@ main{
     align-items: center;
     font-weight: 500;
     transition: 0.3s;
-    cursor: pointer;
 }
 .prox > #btn-prox > span{
     padding-left: 4px;
@@ -88,7 +87,6 @@ main{
     align-items: center;
     font-weight: 500;
     transition: 0.3s;
-    cursor: pointer;
 }
 .pdf > #cpf-pdf > span{
     padding-left: 4px;
@@ -119,7 +117,6 @@ main{
     align-items: center;
     font-weight: 500;
     transition: 0.3s;
-    cursor: pointer;
 }
 .conferir > #btn-conferir > span{
     padding-left: 4px;
@@ -127,7 +124,9 @@ main{
 /* =============================================================== */
 #listaPacientes{
     width: 50%;
-    background-color: cadetblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #listaPacientes > .cabecalho > .titulo > p{

@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+}
+h3, p{
+    margin-bottom: 0.5rem;
+}
+.linha {
+    margin-top: 1rem;
+    border-top: 1px solid black;
+}
+.pdf{
+    width: 500px;
+}
+.pdf > h1{
+    text-align: center;
+    font-size: 4em;
+    padding: 4rem 4rem 2rem 0rem;
+}
+.box-senha{
+    display: flex;
+    justify-content: center;
+}
+.box{
+    width: 40%;
+    margin-left: 4rem;
+}
+#data{
+    font-size: 0.8em;
+    text-align: end;
+}

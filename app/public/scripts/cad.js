@@ -1,3 +1,4 @@
+const link = 'http://localhost:8082'
 let dados = ['','','','']
 
 function nomeDoPaciente(){
@@ -93,7 +94,6 @@ function cadastrar(){
 
 function enviar(){
     if(cadastrar() == 1){
-        console.log(dados)
         fetch('/cad',{
             method: 'POST',
             headers: {
@@ -101,6 +101,8 @@ function enviar(){
             },
             body: JSON.stringify({dados})
         })
-        window.location.href = 'http://localhost:8082/'
+        setTimeout(() => {
+            window.location.href = `${link}/pdf`
+        },1000)
     }
 }

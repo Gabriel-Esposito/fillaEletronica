@@ -2,7 +2,7 @@
 
 <main>
     <section id="control">
-        <div class="btn-cad">Cadastrar Paciente <span class="material-symbols-outlined">add</span></div>
+        <div class="btn-cad" onclick="btnCadastro()">Cadastrar Paciente <span class="material-symbols-outlined">add</span></div>
 
         <div class="prox">
             <h3>Selecione o setor livre:</h3>
@@ -25,7 +25,7 @@
             <p>Digite o CPF do paciente no campo a baixo, <strong>caso o número já tenha sido chamado, o paciente terá de efetuar um novo cadastro!</strong></p>
             <div class="box-cpf">
                 <p><strong>CPF:</strong></p>
-                <input type="text" name="cpfPDF" id="cpfPDF" oninput="btnCPF()">
+                <input type="number" name="cpfPDF" id="cpfPDF" oninput="btnCPF()">
             </div>
             <div id="cpf-pdf">Imprimir novamente <span class="material-symbols-outlined">rotate_left</span></div>
         </div>
@@ -37,14 +37,14 @@
                 <p><strong>Código:</strong></p>
                 <input type="text" name="codigoSePaciente" id="codigoSePaciente" oninput="btnCodigo()">
             </div>
-            <div id="btn-conferir">Conferir dados <span class="material-symbols-outlined">quick_reference_all</span></div>
+            <div id="btn-conferir" onclick="conferir()">Conferir dados <span class="material-symbols-outlined">quick_reference_all</span></div>
         </div>
     </section>
     
     <section id="listaPacientes">
         <div class="cabecalho">
             <div class="titulo">
-                <p>Número de pacientes: 01</p>
+                <p>Número de pacientes: {{numPacientes}}</p>
             </div>
             <div class="tituloTabela">
                 <p id="name">NOME</p>
@@ -54,36 +54,13 @@
         </div>
 
         <div class="container">
-            <div class="paciente">
-                <p id="nomePac"><span class="material-symbols-outlined">person</span>Ana Clara</p>
-                <p id="consultaPac">Dentista</p>
-                <p id="senhaPac">001</p>
-             </div>
-            <div class="paciente">
-                <p id="nomePac"><span class="material-symbols-outlined">person</span>Marcos</p>
-                <p id="consultaPac">Pediatria</p>
-                <p id="senhaPac">195</p>
-             </div>
-                         <div class="paciente">
-                <p id="nomePac"><span class="material-symbols-outlined">person</span>Ana Clara</p>
-                <p id="consultaPac">Dentista</p>
-                <p id="senhaPac">001</p>
-             </div>
-            <div class="paciente">
-                <p id="nomePac"><span class="material-symbols-outlined">person</span>Marcos</p>
-                <p id="consultaPac">Pediatria</p>
-                <p id="senhaPac">195</p>
-             </div>
-                         <div class="paciente">
-                <p id="nomePac"><span class="material-symbols-outlined">person</span>Ana Clara</p>
-                <p id="consultaPac">Dentista</p>
-                <p id="senhaPac">001</p>
-             </div>
-            <div class="paciente">
-                <p id="nomePac"><span class="material-symbols-outlined">person</span>Marcos</p>
-                <p id="consultaPac">Pediatria</p>
-                <p id="senhaPac">195</p>
-             </div>
+            {{#each pacientesLista}}
+                <div class="paciente">
+                    <p id="nomePac"><span class="material-symbols-outlined">person</span>{{nome}}</p>
+                    <p id="consultaPac">{{consulta}}</p>
+                    <p id="senhaPac">{{senha}}</p>
+                </div>
+            {{/each}}
         </div>
     </section>
 </main>

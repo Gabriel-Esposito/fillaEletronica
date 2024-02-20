@@ -15,7 +15,7 @@ let pacientes_num = 0
 let dadosDecad = []
 
 app.get('/',function(req,res){
-    res.render('home')
+    res.render('dadosPac')
 })
 
 app.get('/pdf',function(req,res){
@@ -30,7 +30,7 @@ app.get('/pdf',function(req,res){
 
 app.get('/c',function(req,res){
     //dados() //pag inicial
-    res.render('cad')
+    res.render('dadosPac')
 })
 app.get('/cad',function(req,res){
     //cad() //cad user
