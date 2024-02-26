@@ -15,7 +15,7 @@ let pacientes_num = 0
 let dadosDecad = []
 
 app.get('/',function(req,res){
-    res.render('dadosPac')
+    res.render('tv')
 })
 
 app.get('/pdf',function(req,res){

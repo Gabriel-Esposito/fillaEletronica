@@ -9,7 +9,7 @@ function pdf(){
     print()
     setTimeout(() =>{
         window.location.href = `${link}/home`
-    },4000)
+    },2000)
 }
 letra()
 pdf()

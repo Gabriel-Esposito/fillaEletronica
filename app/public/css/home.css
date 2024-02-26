@@ -165,31 +165,31 @@ main{
     border-right: 1px solid black;
 }
 /* =============================================================== */
-#listaPacientes > .container {
+#listaPacientes > #container {
     height: 40vh;
     overflow-y: scroll;
     border-radius: 0px 0px 4px 4px;
 }
-#listaPacientes > .container > .paciente{
+#listaPacientes > #container > .paciente{
     background-color: white;
     display: flex;
     text-align: center;
     margin-bottom: 0.3rem;
 }
-#listaPacientes > .container > .paciente > #nomePac{
+#listaPacientes > #container > .paciente > #nomePac{
     width: 40%;
     border-right: 1px solid black;
     display: flex;
     justify-content: start;
     align-items: center;
 }
-#listaPacientes > .container > .paciente > #nomePac > span{
+#listaPacientes > #container > .paciente > #nomePac > span{
     padding: 0px 8px;
 }
-#listaPacientes > .container > .paciente > #consultaPac{
+#listaPacientes > #container > .paciente > #consultaPac{
     width: 35%;
     border-right: 1px solid black;
 }
-#listaPacientes > .container > .paciente > #senhaPac{
+#listaPacientes > #container > .paciente > #senhaPac{
     width: 25%;
 }

@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const BancoDedados = require('./mysql/tabela');
 const handlebars = require('express-handlebars');
+const WebSocket = require('ws')
+const ws = new WebSocket.Server({port: 8081})
 
 //config handlebars
 app.engine('handlebars', handlebars.engine({ defaultLayout: 'main', runtimeOptions: { allowProtoPropertiesByDefault: true, allowProtoMethodsByDefault: true }}));
@@ -15,12 +17,15 @@ app.use(express.json());
 const PORT = 8082
 let senha = '@ADM'
 let user = 'off'
+let pcs = []
 let numPacientes = 0
 let numPaciente = 0
 let filaPacientes = []
 let dadosDeCad = []
 let pdf = []
 let conferir = []
+let pdfNovo = ''
+let prioridade = 0
 
 app.get('/',function(req,res){
     user = 'off'
@@ -30,6 +35,17 @@ app.get('/',function(req,res){
 app.post('/login',function(req,res){
     if(req.body.senha == senha){
         user = 'on'
+    }
+})
+
+app.get('/home',function(req,res){
+    if(user == 'on'){
+        dados()
+        setTimeout(() =>{
+            res.render('home',{pacientesLista: filaPacientes,numPacientes})
+        },1300)
+    }else{
+        res.redirect('/')
     }
 })
 
@@ -52,12 +68,55 @@ app.get('/pdf',function(req,res){
     }
 })
 
-app.get('/home',function(req,res){
-    if(user == 'on'){
-        dados()
+ws.on('connection', (ws) => {
+    console.log('Servidor WS ligado')
+    pcs.push(ws)
+
+    ws.on('message', (mensagem) => {
+        if(mensagem == 'isTV'){
+            ws.isTv = true
+        }else if(mensagem == 'entrou!'){
+            atualizaTabela()
+        }
+        pcs.forEach(element => {
+            console.log(element.isTv)
+        });
+    })
+})
+
+app.get('/t',function(req,res){
+    res.render('tv')
+})
+
+app.post('/proximo',function(req,res){
+    let proximoPaciente = priPaciente()
+    if(prioridade == 0){
         setTimeout(() =>{
-            res.render('home',{pacientesLista: filaPacientes,numPacientes})
-        },1300)
+            atualizaTV(filaPacientes[0].senha) 
+        },4000)
+
+        prioridade = 1
+    }else if(prioridade == 1 && proximoPaciente == undefined){
+        atualizaTV(filaPacientes[0].senha)
+    }else if(prioridade == 1 && proximoPaciente != undefined){
+        atualizaTV(filaPacientes[0].senha)
+        prioridade = 0
+    }else {
+        console.log('ERRO')
+    }
+})
+
+app.post('/reImprimir',function(req,res){
+    imprimirNovamente(req.body.cpf2)
+})
+app.get('/reImprimir',function(req,res){
+    if(user == 'on'){
+        if(pdfNovo != ''){
+            res.render('pdf',pdfNovo)
+        }else{
+            console.log(` 3 pdfNovo : ${pdfNovo} | vazio? ${pdfNovo == ''}`)
+            res.render('notPdf')
+        }
     }else{
         res.redirect('/')
     }
@@ -80,7 +139,7 @@ app.listen(PORT,function(){
 
 function dados(){
     filaPacientes = []
-    BancoDedados.findAll({order:[['id','DESC']]}).then(function(posts){
+    BancoDedados.findAll({order:[['id','ASC']]}).then(function(posts){
         numPaciente = posts.length
         for(let i = 0; i < posts.length; i++){
             if(posts[i].atendido == 'Não'){
@@ -90,8 +149,38 @@ function dados(){
         }
     })
 }
+
+function priPaciente(){
+    for(let i = 0; i < filaPacientes.length; i++){
+        if(filaPacientes[i].prioridade != 'Não'){
+            return filaPacientes[i]
+        }
+    }
+}
+
+function imprimirNovamente(cpf){
+    pdfNovo = ''
+    console.log(` 1 pdfNovo : ${pdfNovo} | vazio? ${pdfNovo == ''}`)
+    BancoDedados.findAll({order:[['id','ASC']]}).then(function(posts){
+        for(let i = 0; i < posts.length; i++){
+            console.log('entrou!')
+            if(posts[i].cpf == cpf){
+                console.log('cpf enconttrado')
+                if(posts[i].atendido == 'Não'){
+                    pdfNovo = posts[i].dataValues
+                    console.log(` 2 pdfNovo : ${pdfNovo} | vazio? ${pdfNovo == ''}`)
+                    break
+                }else{
+                    console.log('n')
+                }
+            }
+        }
+    })
+    console.log(pdfNovo)
+}
+
 function buscaPaciente(cod){
-    BancoDedados.findAll({order:[['id','DESC']]}).then(function(posts){
+    BancoDedados.findAll({order:[['id','ASC']]}).then(function(posts){
         for(let i = 0; i < posts.length; i++){
             if(posts[i].codigo == cod){
                 let temp = posts[i].dataValues
@@ -156,4 +245,19 @@ function cadPaciente(){
         codigo: c,
         data : dataFormatada
     }
+}
+
+function atualizaTV(senhas){
+    pcs.forEach(ws => {
+        if(ws.isTv){
+            ws.send(senhas)
+        }
+    })
+}
+function atualizaTabela(){
+    pcs.forEach(ws =>{
+        if(ws != ws.isTv){
+            ws.send(['teste',1])
+        }
+    })
 }

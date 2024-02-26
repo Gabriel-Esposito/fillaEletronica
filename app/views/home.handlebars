@@ -17,7 +17,7 @@
                         <option value="Exames">Exames</option>
                 </select>
             </div>
-            <div id="btn-prox">Chamar Paciente <span class="material-symbols-outlined">arrow_forward</span></div>
+            <div id="btn-prox" onclick="proximo()">Chamar Paciente <span class="material-symbols-outlined">arrow_forward</span></div>
         </div>
 
         <div class="pdf">
@@ -25,9 +25,9 @@
             <p>Digite o CPF do paciente no campo a baixo, <strong>caso o número já tenha sido chamado, o paciente terá de efetuar um novo cadastro!</strong></p>
             <div class="box-cpf">
                 <p><strong>CPF:</strong></p>
-                <input type="number" name="cpfPDF" id="cpfPDF" oninput="btnCPF()">
+                <input type="number" name="cpfPDF" id="cpfPDF" min="0" oninput="btnCPF()">
             </div>
-            <div id="cpf-pdf">Imprimir novamente <span class="material-symbols-outlined">rotate_left</span></div>
+            <div id="cpf-pdf" onclick="imprimirNovamente()">Imprimir novamente <span class="material-symbols-outlined">rotate_left</span></div>
         </div>
 
         <div class="conferir">
@@ -53,14 +53,14 @@
             </div>
         </div>
 
-        <div class="container">
-            {{#each pacientesLista}}
+        <div id="container">
+            {{!-- {{#each pacientesLista}}
                 <div class="paciente">
                     <p id="nomePac"><span class="material-symbols-outlined">person</span>{{nome}}</p>
                     <p id="consultaPac">{{consulta}}</p>
                     <p id="senhaPac">{{senha}}</p>
                 </div>
-            {{/each}}
+            {{/each}} --}}
         </div>
     </section>
 </main>
