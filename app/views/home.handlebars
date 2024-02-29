@@ -44,7 +44,7 @@
     <section id="listaPacientes">
         <div class="cabecalho">
             <div class="titulo">
-                <p>Número de pacientes: {{numPacientes}}</p>
+                <p>Número de pacientes: <span id="numPacBack">0</span></p>
             </div>
             <div class="tituloTabela">
                 <p id="name">NOME</p>
@@ -53,15 +53,7 @@
             </div>
         </div>
 
-        <div id="container">
-            {{!-- {{#each pacientesLista}}
-                <div class="paciente">
-                    <p id="nomePac"><span class="material-symbols-outlined">person</span>{{nome}}</p>
-                    <p id="consultaPac">{{consulta}}</p>
-                    <p id="senhaPac">{{senha}}</p>
-                </div>
-            {{/each}} --}}
-        </div>
+        <div id="container"></div>
     </section>
 </main>
 

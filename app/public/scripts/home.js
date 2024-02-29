@@ -7,10 +7,21 @@ soket.addEventListener('open', (event) => {
 })
 
 soket.addEventListener('message',(event) => {
-    let tabela = document.getElementById('container')
-    console.log(event)
-    tabela.innerHTML += `<div class="paciente"><p id="nomePac"><span class="material-symbols-outlined">person</span>{{nome}}</p><p id="consultaPac">{{consulta}}</p><p id="senhaPac">{{senha}}</p></div>`
+    let dadosBackJson = JSON.parse(event.data)
+    addDados(dadosBackJson)
 })
+
+function addDados(dadosBack){
+    let tabela = document.getElementById('container')
+    let numPacientesBack = document.getElementById('numPacBack')
+
+    numPacientesBack.innerText = dadosBack.length
+
+    for(let i = 0; i < dadosBack.length; i++){
+        tabela.innerHTML += `<div class="paciente"><p id="nomePac"><span class="material-symbols-outlined">person</span>${dadosBack[i].nome}</p><p id="consultaPac">${dadosBack[i].consulta}</p><p id="senhaPac">${dadosBack[i].senha}</p></div>`
+    }
+    
+}
 
 function btnCadastro(){
     window.location.href = `${link}/cad`

@@ -18,7 +18,6 @@ const PORT = 8082
 let senha = '@ADM'
 let user = 'off'
 let pcs = []
-let numPacientes = 0
 let numPaciente = 0
 let filaPacientes = []
 let dadosDeCad = []
@@ -42,7 +41,7 @@ app.get('/home',function(req,res){
     if(user == 'on'){
         dados()
         setTimeout(() =>{
-            res.render('home',{pacientesLista: filaPacientes,numPacientes})
+            res.render('home')
         },1300)
     }else{
         res.redirect('/')
@@ -78,9 +77,6 @@ ws.on('connection', (ws) => {
         }else if(mensagem == 'entrou!'){
             atualizaTabela()
         }
-        pcs.forEach(element => {
-            console.log(element.isTv)
-        });
     })
 })
 
@@ -90,20 +86,23 @@ app.get('/t',function(req,res){
 
 app.post('/proximo',function(req,res){
     let proximoPaciente = priPaciente()
-    if(prioridade == 0){
-        setTimeout(() =>{
-            atualizaTV(filaPacientes[0].senha) 
-        },4000)
 
+    if(prioridade == 0){
+        atualizaTV([filaPacientes[0].senha,filaPacientes[0].consulta]) 
         prioridade = 1
     }else if(prioridade == 1 && proximoPaciente == undefined){
-        atualizaTV(filaPacientes[0].senha)
+        atualizaTV([filaPacientes[0].senha,filaPacientes[0].consulta])
+        filaPacientes[0].atendido = 'Sim'
     }else if(prioridade == 1 && proximoPaciente != undefined){
-        atualizaTV(filaPacientes[0].senha)
+        atualizaTV(proximoPaciente)
         prioridade = 0
     }else {
         console.log('ERRO')
     }
+    let t = BancoDedados.findOne()
+    setTimeout(()=>{
+        res.redirect('/home')
+    },200)
 })
 
 app.post('/reImprimir',function(req,res){
@@ -153,7 +152,8 @@ function dados(){
 function priPaciente(){
     for(let i = 0; i < filaPacientes.length; i++){
         if(filaPacientes[i].prioridade != 'Não'){
-            return filaPacientes[i]
+            filaPacientes[i].atendido = 'Sim'
+            return [filaPacientes[i].senha,filaPacientes[i].consulta]
         }
     }
 }
@@ -250,14 +250,16 @@ function cadPaciente(){
 function atualizaTV(senhas){
     pcs.forEach(ws => {
         if(ws.isTv){
-            ws.send(senhas)
+            let dadosJSONTv = JSON.stringify(senhas)
+            ws.send(dadosJSONTv)
         }
     })
 }
 function atualizaTabela(){
     pcs.forEach(ws =>{
         if(ws != ws.isTv){
-            ws.send(['teste',1])
+            let dadosJSON = JSON.stringify(filaPacientes)
+            ws.send(dadosJSON)
         }
     })
 }

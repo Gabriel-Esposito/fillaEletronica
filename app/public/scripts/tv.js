@@ -1,9 +1,19 @@
 const soket = new WebSocket('ws://192.168.0.106:8081')
 
+let info = [{senha : '',consulta : ''},{senha : '',consulta : ''},{senha : '',consulta : ''}]
+
 soket.addEventListener('open',(event) =>{
     soket.send('isTV')
 })
 soket.addEventListener('message',(event) => {
+    let dadosBackJson = JSON.parse(event.data)
+    if (dadosBackJson.length < 3){
+        listaPacientes(dadosBackJson) 
+    }
+
+})
+
+function listaPacientes(dadosBack){
     let atual = document.getElementById('atual')
     let senha1 = document.getElementById('senha1')
     let setor1 = document.getElementById('setor1')
@@ -11,17 +21,23 @@ soket.addEventListener('message',(event) => {
     let setor2 = document.getElementById('setor2')
     let senha3 = document.getElementById('senha3')
     let setor3 = document.getElementById('setor3')
-    let dados_back = [event.data,0,0,0,0,0,0]
-    atual.innerText = dados_back[0]
-    senha1.innerText = dados_back[1]
-    setor1.innerText = dados_back[2]
-    senha2.innerText = dados_back[3]
-    setor2.innerText = dados_back[4]
-    senha3.innerText = dados_back[5]
-    setor3.innerText = dados_back[6]
+    atual.innerText = dadosBack[0]
+
+    info[2].senha = info[1].senha
+    info[2].consulta = info[1].consulta
+    info[1].senha = info[0].senha
+    info[1].consulta = info[0].consulta
+    info[0].senha = dadosBack[0]
+    info[0].consulta = dadosBack[1]
+
+    senha1.innerText = info[0].senha
+    setor1.innerText = info[0].consulta
+    senha2.innerText = info[1].senha
+    setor2.innerText = info[1].consulta
+    senha3.innerText = info[2].senha
+    setor3.innerText = info[2].consulta
     ouvir()
-    console.log(event.data)
-})
+}
 
 function ouvir(){
     let audios = [a0 = document.getElementById('a0'),a1 = document.getElementById('a1'),a2 = document.getElementById('a2'),a3 = document.getElementById('a3'),a4 = document.getElementById('a4'),a5 = document.getElementById('a5'),a6 = document.getElementById('a6'),a7 = document.getElementById('a7'),a8 = document.getElementById('a8'),a9 = document.getElementById('a9')]
