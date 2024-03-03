@@ -14,7 +14,7 @@ soket.addEventListener('message',(event) => {
 function addDados(dadosBack){
     let tabela = document.getElementById('container')
     let numPacientesBack = document.getElementById('numPacBack')
-
+    tabela.innerText = ''
     numPacientesBack.innerText = dadosBack.length
 
     for(let i = 0; i < dadosBack.length; i++){

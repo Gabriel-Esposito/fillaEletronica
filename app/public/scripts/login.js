@@ -26,6 +26,6 @@ function entrar(){
         })
         setTimeout(() => {
             window.location.href = `${link}/home`
-        },1500)
+        },1000)
     }
 }
