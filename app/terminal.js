@@ -78,6 +78,10 @@ ws.on('connection', (ws) => {
             atualizaTabela()
         }
     })
+
+    ws.on("close", () => {
+        pcs = pcs.filter((pc) => pc !== ws)
+    })
 })
 
 app.get('/t',function(req,res){
@@ -86,24 +90,11 @@ app.get('/t',function(req,res){
 
 app.post('/proximo',function(req,res){
     let next = proximoPaciente(req.body.setor)
-
-    if(prioridade == 0){
-        atualizaTV(next)
-        prioridade = 1
-    }else if(prioridade == 1 && next == undefined){
-        atualizaTV(next)
-    }else if(prioridade == 1 && next != undefined){
-        atualizaTV(next)
-        prioridade = 0
-    }else {
-        console.log('ERRO')
-    }
+    atualizaTV(next)
     setTimeout(()=>{
         atualizaTabela()
     },1000)
-    setTimeout(()=>{
-        res.redirect('/home')
-    },200)
+    res.redirect('/home')
 })
 
 app.post('/reImprimir',function(req,res){
@@ -158,21 +149,30 @@ function dados(){
 }
 
 function proximoPaciente(setor){
-    if(prioridade == 0){
+    let loop = 0
+    while(loop < 4){
+       if(prioridade == 0){
         for(let i = 0; i < filaPacientes.length; i++){
             if(filaPacientes[i].prioridade == 'Não' && filaPacientes[i].consulta == setor){
                 atendido(filaPacientes[i].id)
+                prioridade = 1
                 return [filaPacientes[i].senha,filaPacientes[i].consulta]
             }
         }
-    }else if(prioridade == 1){
-        for(let i = 0; i < filaPacientes.length; i++){
-            if(filaPacientes[i].prioridade != 'Não' && filaPacientes[i].consulta == setor){
-                atendido(filaPacientes[i].id)
-                return [filaPacientes[i].senha,filaPacientes[i].consulta]
+        prioridade = 1
+        }else if(prioridade == 1){
+            for(let i = 0; i < filaPacientes.length; i++){
+                if(filaPacientes[i].prioridade != 'Não' && filaPacientes[i].consulta == setor){
+                    atendido(filaPacientes[i].id)
+                    prioridade = 0
+                    return [filaPacientes[i].senha,filaPacientes[i].consulta]
+                }
             }
+            prioridade = 0
         }
+        loop++
     }
+    
 
 }
 
@@ -264,20 +264,16 @@ function atualizaTV(senhas){
     pcs.forEach(ws => {
         if(ws.isTv){
             let dadosJSONTv = JSON.stringify(senhas)
-            if(senhas != undefined){
-                setTimeout(() =>{
-                    ws.send(dadosJSONTv)
-                },1000)
- 
-            }else{
-                return;
-            }
+            setTimeout(() =>{
+                console.log(senhas)
+                ws.send(dadosJSONTv)
+            },3000)
         }
     })
 }
 function atualizaTabela(){
     pcs.forEach(ws =>{
-        if(ws != ws.isTv){
+        if(!ws.isTv){
             let dadosJSON = JSON.stringify(filaPacientes)
             ws.send(dadosJSON)
         }

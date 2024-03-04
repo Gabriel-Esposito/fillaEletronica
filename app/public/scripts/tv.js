@@ -7,9 +7,8 @@ soket.addEventListener('open',(event) =>{
 })
 soket.addEventListener('message',(event) => {
     let dadosBackJson = JSON.parse(event.data)
-    if (dadosBackJson.length < 3){
-        listaPacientes(dadosBackJson) 
-    }
+    console.log(dadosBackJson)
+    listaPacientes(dadosBackJson) 
 
 })
 
