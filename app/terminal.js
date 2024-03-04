@@ -100,6 +100,7 @@ app.post('/proximo',function(req,res){
 app.post('/reImprimir',function(req,res){
     imprimirNovamente(req.body.cpf2)
 })
+
 app.get('/reImprimir',function(req,res){
     if(user == 'on'){
         if(pdfNovo != ''){
@@ -112,10 +113,10 @@ app.get('/reImprimir',function(req,res){
         res.redirect('/')
     }
 })
-
 app.post('/conferir',function(req,res){
     buscaPaciente(req.body.codigo)
 })
+
 app.get('/conferir',function(req,res){
     if(user == 'on'){
         if(conferir != ''){
@@ -156,7 +157,7 @@ function proximoPaciente(setor){
             if(filaPacientes[i].prioridade == 'Não' && filaPacientes[i].consulta == setor){
                 atendido(filaPacientes[i].id)
                 prioridade = 1
-                return [filaPacientes[i].senha,filaPacientes[i].consulta]
+                return [filaPacientes[i].senha,filaPacientes[i].consulta,senhaFormat(filaPacientes[i],0)]
             }
         }
         prioridade = 1
@@ -165,15 +166,22 @@ function proximoPaciente(setor){
                 if(filaPacientes[i].prioridade != 'Não' && filaPacientes[i].consulta == setor){
                     atendido(filaPacientes[i].id)
                     prioridade = 0
-                    return [filaPacientes[i].senha,filaPacientes[i].consulta]
+                    return [filaPacientes[i].senha,filaPacientes[i].consulta,senhaFormat(filaPacientes[i],1)]
                 }
             }
             prioridade = 0
         }
         loop++
     }
-    
+}
 
+function senhaFormat(paciente,pri){
+    if(pri == 0){
+        senhaFormatada = `${paciente.consulta[0]}${paciente.senha}`
+    }else if(pri == 1){
+        senhaFormatada = `P${paciente.consulta[0]}${paciente.senha}`
+    }
+    return senhaFormatada
 }
 
 function atendido(id){
@@ -206,6 +214,19 @@ function buscaPaciente(cod){
         }
         if(results.length > 0){
             let temp = results[0]
+            if(temp.prioridade != 'Não'){
+                conferir = {
+                    nome : temp.nome,
+                    cpf : `${temp.cpf[0]}${temp.cpf[1]}${temp.cpf[2]}.###.###-${temp.cpf[9]}${temp.cpf[10]}`,
+                    senha : `P${temp.consulta[0]}${temp.senha}`,
+                    consulta : temp.consulta,
+                    prioridade : temp.prioridade,
+                    atendido : temp.atendido,
+                    codigo : temp.codigo,
+                    data : temp.datacad,
+                    dataAtendido : temp.dataatendido
+                }
+            }
             conferir = {
                 nome : temp.nome,
                 cpf : `${temp.cpf[0]}${temp.cpf[1]}${temp.cpf[2]}.###.###-${temp.cpf[9]}${temp.cpf[10]}`,
@@ -246,6 +267,7 @@ function codigo(){
     }
     return codigoPaciente
 }
+
 function cadPaciente(){
     let s = senhaPaciente()
     let c = codigo()
@@ -254,12 +276,15 @@ function cadPaciente(){
 
     BancoDedados.query(`INSERT INTO pacientes (nome,cpf,consulta,prioridade,atendido,senha,codigo,datacad) VALUES ('${dadosDeCad[0]}','${dadosDeCad[1]}','${dadosDeCad[2]}','${dadosDeCad[3]}','Não','${s}','${c}','${dataFormatada} ${dataAtual.getHours()}:${dataAtual.getMinutes()}')`)
     pdf = {
+        prioridade : dadosDeCad[3],
+        nome : dadosDeCad[0],
         senha : s ,
         consulta : dadosDeCad[2],
         codigo: c,
         data : `${dataFormatada} ${dataAtual.getHours()}:${dataAtual.getMinutes()}`
     }
 }
+
 function atualizaTV(senhas){
     pcs.forEach(ws => {
         if(ws.isTv){
@@ -271,6 +296,7 @@ function atualizaTV(senhas){
         }
     })
 }
+
 function atualizaTabela(){
     pcs.forEach(ws =>{
         if(!ws.isTv){

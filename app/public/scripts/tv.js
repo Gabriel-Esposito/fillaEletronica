@@ -26,7 +26,7 @@ function listaPacientes(dadosBack){
     info[2].consulta = info[1].consulta
     info[1].senha = info[0].senha
     info[1].consulta = info[0].consulta
-    info[0].senha = dadosBack[0]
+    info[0].senha = dadosBack[2]
     info[0].consulta = dadosBack[1]
 
     senha1.innerText = info[0].senha

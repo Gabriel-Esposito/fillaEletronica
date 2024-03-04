@@ -4,6 +4,9 @@
 h3, p{
     margin-bottom: 0.5rem;
 }
+#pri{
+    display: none;
+}
 .linha {
     margin-top: 1rem;
     border-top: 1px solid black;
@@ -27,4 +30,14 @@ h3, p{
 #data{
     font-size: 0.8em;
     text-align: end;
+}
+#info{
+    width: 80%;
+    margin: 1rem 0rem 1rem 4rem;
+}
+#credito{
+    text-align: end;
+}
+#credito > img{
+    width: 25px;
 }

@@ -1,0 +1,15 @@
+create database filaeletronica;
+
+create table pacientes(
+id int not null auto_increment,
+nome varchar(30) not null,
+cpf varchar(14) not null,
+consulta varchar(100) not null,
+prioridade varchar(100) default 'false',
+atendido varchar(5) default 'false',
+senha varchar(4) not null,
+codigo varchar(6) not null,
+datacad varchar(255) not null,
+dataatendido varchar(255) null,
+primary key(id)
+)default charset = utf8;

@@ -1,6 +1,10 @@
 const link = 'http://localhost:8082'
 let dados = ['','','','']
 
+function voltar(){
+    history.back()
+}
+
 function nomeDoPaciente(){
     let name = document.getElementById('name').value
     let namePaciente = document.getElementById('pacienteNome')

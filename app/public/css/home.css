@@ -2,6 +2,8 @@ main{
     background-color: bisque;
     padding: 2rem;
     display: flex;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.301);
 }
 
 #control{
@@ -192,4 +194,9 @@ main{
 }
 #listaPacientes > #container > .paciente > #senhaPac{
     width: 25%;
+}
+#versao{
+    margin-top: 1rem;
+    display: inline-block;
+    text-align: end;
 }

@@ -1,18 +1,33 @@
 <link rel="stylesheet" href="css/pdf.css">
 
 <div class="pdf">
+    <span id="pri">{{prioridade}}</span>
     <div class="box-senha">
         <h1 id="letra"></h1>
         <h1>{{senha}}</h1>
     </div>
     <div class="box">
+        <h3>Paciente:</h3>
+        <p>{{nome}}</p>
+
         <h3>Consulta:</h3>
         <p id="cons">{{consulta}}</p>
+
         <h3>Código de segurança:</h3>
         <p>{{codigo}}</p>
+        
     </div>
     <h3 id="data">{{data}}</h3>
     <div class="linha"></div>
+    <div id="info">
+        <h3>Curiosidade:</h3>
+        <p><strong>001</strong> : Sua senha de atendimento.</p>
+        <p><strong>D</strong>001 : Letra que representa seu tipo de exame</p>
+        <p><strong>P</strong>D001 : Letra que representa prioridade no atendimento </p>
+    </div>
+    <div id="credito"><img src="img/logo.png" alt="" id="credito"></div>
+    <div class="linha"></div>
 </div>
+
 
 <script src="scripts/pdf.js"></script>
