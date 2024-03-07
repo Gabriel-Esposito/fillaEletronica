@@ -3,7 +3,7 @@ const app = express();
 const BancoDedados = require('./mysql/config');
 const handlebars = require('express-handlebars');
 const WebSocket = require('ws');
-const BancoDeDados = require('./mysql/config');
+require('dotenv').config()
 const ws = new WebSocket.Server({port: 8081})
 
 //config handlebars
@@ -15,7 +15,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
-const PORT = 8082
+const PORT = process.env.PORT_EXPRESS
 let senha = '@ADM'
 let user = 'off'
 let pcs = []
